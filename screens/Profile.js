@@ -133,7 +133,7 @@ const Profile = (props) => {
             <View style={{ marginTop: 50 }}>
               <Button onPress={myCustomerShare} title="Share" />
               <Button
-                OnPress={() => {
+                onPress={() => {
                   AsyncStorage.removeItem("sessionToken");
                   props.setLoggedInState("NOT_LOGGED_IN");
                 }}
