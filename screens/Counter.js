@@ -40,10 +40,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { IconButton } from 'react-native-paper';
 
 export default function Counter(props) {
-  const sessionToken = AsyncStorage.getItem("sessionToken");
-  const userToken = sessionToken;
-  const link = "https://dev.stedi.me/timer.html#" + userToken;
-
   const [completionCount, setCompletionCount] = useState(0);
   const [counter, setCounter] = useState(3); //(180 3 mins)
   const [score, setScore] = useState(0);
@@ -150,9 +146,21 @@ export default function Counter(props) {
     }
   };
 
+  const shareSpotter = async () => {
+    const shareOptions = {
+      message: "https://dev.stedi.me/timer.html#" + token.current,
+    };
+    try {
+      const shareResponse = await Share.share(shareOptions);
+      console.log(shareResponse);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
   const myCustomerShare = async () => {
     const shareOptions = {
-      message: link,
+      message: "This is a test.",
     };
     try {
       const shareResponse = await Share.share(shareOptions);
@@ -384,7 +392,7 @@ export default function Counter(props) {
             </TouchableOpacity>
           </CardContent>
           <View style={{ marginTop: 50 }}>
-            <Button onPress={myCustomerShare} title="Share" />
+            <Button onPress={shareSpotter} title="Share" />
           </View>
           <ProgressBar
             progress={(stepCount * 0.5) / 30 + completionCount * 0.5}
